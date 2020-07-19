@@ -1,0 +1,58 @@
+#include "mlist.h"
+
+struct STATE_NODE *init_state_node(struct STATE_NODE *t, state _sname, int arr[4], void (*_f)(int, int)) {
+  if(t == NULL) return NULL;
+
+  for(int i = 0; i < NODE_DATA_SIZE; i++) {
+    t->d[i] = arr[i];
+  }
+
+  t->sName = _sname;
+  t->f = _f;
+  t->next = NULL;
+
+  return t;
+}
+
+int add_state_node(struct STATE_NODE *t, struct STATE_NODE *a) {
+  if(t == NULL) return 0;
+
+  struct STATE_NODE *h = t;
+  while(h->next != NULL) {
+    h = h->next;
+  }
+
+  h->next = a;
+  h->next->next = NULL;
+
+  return 1;
+}
+
+int size_state_node(struct STATE_NODE *t) {
+  if(t == NULL) return 0;
+
+  int counter = 1;
+  struct STATE_NODE *h = t;
+  while(h->next != NULL) {
+    counter++;
+    h = h->next;
+  }
+
+  return counter;
+}
+
+void standard_func(int _mSpeed, int _pVal) {
+  Serial.println("Standard Func");
+}
+
+void boot_func(int _mSpeed, int _pVal) {
+  Serial.println("Boot Func");
+}
+
+void lowpressure_func(int _mSpeed, int _pVal) {
+  Serial.println("Low Func");
+}
+
+void highpressure_func(int _mSpeed, int _pVal) {
+  Serial.println("High Func");
+}
